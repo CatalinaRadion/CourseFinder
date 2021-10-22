@@ -11,11 +11,11 @@ import java.util.Optional;
 public class CourseService extends RESTService<Course, CourseDTO, Long> {
 
     public CourseService(CourseRepository repo) {
-        super(repo, CourseDTO::new);
+        super(repo, CourseDTO::new, Course::new);
     }
 
     @Override
-    public Optional<CourseDTO> postEntity(Long id, Course newObject) {
+    public Optional<CourseDTO> put(Long id, Course newObject) {
         var optionalCourse = repo.findById(id);
         optionalCourse.ifPresent(course -> {
             course.setName(newObject.getName());

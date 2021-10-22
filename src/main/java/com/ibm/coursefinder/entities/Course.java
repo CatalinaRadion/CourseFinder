@@ -1,5 +1,6 @@
 package com.ibm.coursefinder.entities;
 
+import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
@@ -20,6 +21,13 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "professor_id"))
     private List<Professor> professors;
+
+    public Course(CourseDTO courseDTO) {
+        name = courseDTO.getName();
+    }
+
+    public Course() {
+    }
 
     public List<Professor> getProfessors() {
         return professors;
@@ -44,11 +52,5 @@ public class Course {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "name = " + name + ")";
-    }
+    
 }
