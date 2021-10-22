@@ -1,0 +1,1 @@
+They define the REST endpoints and call the services to return the models.
