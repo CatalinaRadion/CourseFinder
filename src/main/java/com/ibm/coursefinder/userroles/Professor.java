@@ -4,54 +4,33 @@ package com.ibm.coursefinder.userroles;
 import com.ibm.coursefinder.DTOs.ProfessorDTO;
 import com.ibm.coursefinder.entities.Course;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Professor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class Professor extends User {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "professor_id")
+    private Set<Course> courses = new HashSet<>();
 
-    @Column(name = "name")
-    private String name;
+    public Set<Course> getCourses() {
+        return courses;
+    }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "course_professor",
-            joinColumns = @JoinColumn(name = "professor_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 
     public Professor() {
     }
 
     public Professor(ProfessorDTO professorDTO) {
-        name = professorDTO.getName();
+        setName(professorDTO.getName());
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
 }

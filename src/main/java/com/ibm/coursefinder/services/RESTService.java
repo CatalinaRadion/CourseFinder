@@ -35,10 +35,11 @@ public abstract class RESTService<T, TDTO, ID> {
     }
 
     public TDTO post(TDTO object) {
+        System.out.println(object.toString());
         return function.apply(repo.save(reverseFunction.apply(object)));
     }
 
     //shouldn't be done by reflection
     //could be, but shouldn't
-    public abstract Optional<TDTO> put(ID id, T newObject);
+    public abstract Optional<TDTO> put(ID id, TDTO newObject);
 }

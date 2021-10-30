@@ -15,11 +15,11 @@ public class CourseService extends RESTService<Course, CourseDTO, Long> {
     }
 
     @Override
-    public Optional<CourseDTO> put(Long id, Course newObject) {
+    public Optional<CourseDTO> put(Long id, CourseDTO newObject) {
         var optionalCourse = repo.findById(id);
         optionalCourse.ifPresent(course -> {
             course.setName(newObject.getName());
-            course.setProfessors(newObject.getProfessors());
+            //course.setProfessors(newObject.getProfessorList().stream().map(Professor::new).collect(Collectors.toList()));
         });
         return optionalCourse.map(function);
     }

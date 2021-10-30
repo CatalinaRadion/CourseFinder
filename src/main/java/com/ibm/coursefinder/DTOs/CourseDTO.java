@@ -13,9 +13,9 @@ public class CourseDTO {
     public CourseDTO(Course courseDAO) {
         name = courseDAO.getName();
         id = courseDAO.getId();
-        professorList = courseDAO.getProfessors()
-                .stream().map(ProfessorDTO::new)
-                .collect(Collectors.toList());
+    }
+
+    public CourseDTO() {
     }
 
     public String getName() {
@@ -58,4 +58,6 @@ public class CourseDTO {
                 ", id=" + id +
                 '}';
     }
+
+
 }

@@ -4,7 +4,7 @@ import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Course {
@@ -16,26 +16,38 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "course_professor",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "professor_id"))
-    private List<Professor> professors;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+    @JoinColumn(name = "professor_id", nullable = false)
+    private Professor professor;
+
+    @OneToMany(mappedBy = "course")
+    private Set<StudentCourse> studentCourses;
 
     public Course(CourseDTO courseDTO) {
-        name = courseDTO.getName();
+        setName(courseDTO.getName());
     }
 
     public Course() {
     }
 
-    public List<Professor> getProfessors() {
-        return professors;
+
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
+
+
+    public com.ibm.coursefinder.userroles.Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(com.ibm.coursefinder.userroles.Professor professor) {
+        this.professor = professor;
+    }
+
 
     public String getName() {
         return name;
@@ -52,5 +64,6 @@ public class Course {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
+
 }

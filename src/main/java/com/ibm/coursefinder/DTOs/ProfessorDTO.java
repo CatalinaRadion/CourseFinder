@@ -2,21 +2,22 @@ package com.ibm.coursefinder.DTOs;
 
 import com.ibm.coursefinder.userroles.Professor;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProfessorDTO {
     private String name;
     private Long id;
-    private List<CourseDTO> courseList;
+    private Set<CourseDTO> courseList;
 
-    public ProfessorDTO(Professor professorDAO) {
-        name = professorDAO.getName();
-        id = professorDAO.getId();
-        courseList = professorDAO.getCourses()
-                .stream().map(CourseDTO::new)
-                .collect(Collectors.toList());
+    public ProfessorDTO(Professor professor) {
+        name = professor.getName();
+        id = professor.getId();
     }
+
+    public ProfessorDTO() {
+    }
+
 
     public String getName() {
         return name;
@@ -34,11 +35,11 @@ public class ProfessorDTO {
         this.id = id;
     }
 
-    public List<CourseDTO> getCourseList() {
+    public Set<CourseDTO> getCourseList() {
         return courseList;
     }
 
-    public void setCourseList(List<CourseDTO> courseList) {
+    public void setCourseList(Set<CourseDTO> courseList) {
         this.courseList = courseList;
     }
 
