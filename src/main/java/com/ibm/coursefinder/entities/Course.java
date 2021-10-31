@@ -1,9 +1,9 @@
 package com.ibm.coursefinder.entities;
 
-import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,16 +16,12 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
 
     @OneToMany(mappedBy = "course")
-    private Set<StudentCourse> studentCourses;
-
-    public Course(CourseDTO courseDTO) {
-        setName(courseDTO.getName());
-    }
+    private Set<StudentCourse> studentCourses = new HashSet<>();
 
     public Course() {
     }
@@ -40,11 +36,11 @@ public class Course {
     }
 
 
-    public com.ibm.coursefinder.userroles.Professor getProfessor() {
+    public Professor getProfessor() {
         return professor;
     }
 
-    public void setProfessor(com.ibm.coursefinder.userroles.Professor professor) {
+    public void setProfessor(Professor professor) {
         this.professor = professor;
     }
 

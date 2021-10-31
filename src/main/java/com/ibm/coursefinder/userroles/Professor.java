@@ -1,7 +1,6 @@
 package com.ibm.coursefinder.userroles;
 
 
-import com.ibm.coursefinder.DTOs.ProfessorDTO;
 import com.ibm.coursefinder.entities.Course;
 
 import javax.persistence.CascadeType;
@@ -13,7 +12,7 @@ import java.util.Set;
 
 @Entity
 public class Professor extends User {
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "professor_id")
     private Set<Course> courses = new HashSet<>();
 
@@ -26,10 +25,6 @@ public class Professor extends User {
     }
 
     public Professor() {
-    }
-
-    public Professor(ProfessorDTO professorDTO) {
-        setName(professorDTO.getName());
     }
 
 

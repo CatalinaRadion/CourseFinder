@@ -15,7 +15,7 @@ public abstract class User {
     private String name;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date_of_birth", nullable = true)
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     public Date getDateOfBirth() {
