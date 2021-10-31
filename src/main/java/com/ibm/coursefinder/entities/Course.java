@@ -1,6 +1,5 @@
 package com.ibm.coursefinder.entities;
 
-import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
@@ -29,8 +28,8 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Set<StudentCourse> studentCourses;
 
-    public Course(CourseDTO courseDTO) {
-        setName(courseDTO.getName());
+    public Course(Course course) {
+        setName(course.getName());
     }
 
     public Course() {
@@ -59,8 +58,8 @@ public class Course {
     }
 
     public void setCourseDetails(CourseDetails courseDetails) {
-        if(courseDetails == null) {
-            if(this.courseDetails != null) {
+        if (courseDetails == null) {
+            if (this.courseDetails != null) {
                 this.courseDetails.setCourse(null);
             }
         } else {
