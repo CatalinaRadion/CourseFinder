@@ -1,9 +1,9 @@
 package com.ibm.coursefinder.entities;
 
+import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,12 +16,22 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+    @OneToOne(cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            optional = false)
+    private CourseDetails courseDetails;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
 
     @OneToMany(mappedBy = "course")
-    private Set<StudentCourse> studentCourses = new HashSet<>();
+    private Set<StudentCourse> studentCourses;
+
+    public Course(CourseDTO courseDTO) {
+        setName(courseDTO.getName());
+    }
 
     public Course() {
     }
@@ -36,14 +46,28 @@ public class Course {
     }
 
 
-    public Professor getProfessor() {
+    public com.ibm.coursefinder.userroles.Professor getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
+    public void setProfessor(com.ibm.coursefinder.userroles.Professor professor) {
         this.professor = professor;
     }
 
+    public CourseDetails getCourseDetails() {
+        return courseDetails;
+    }
+
+    public void setCourseDetails(CourseDetails courseDetails) {
+        if(courseDetails == null) {
+            if(this.courseDetails != null) {
+                this.courseDetails.setCourse(null);
+            }
+        } else {
+            courseDetails.setCourse(this);
+        }
+        this.courseDetails = courseDetails;
+    }
 
     public String getName() {
         return name;

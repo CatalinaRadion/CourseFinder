@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+
+</head>
+<body>
+
+<span th:text="${intro}" />
+
+<div class="col-8">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <td class="col-2">Course</td>
+            <td class="col-6">Course details</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${course}">
+            <td th:text="${course.name}"></td>
+            <td th:text="${course.courseDetails}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

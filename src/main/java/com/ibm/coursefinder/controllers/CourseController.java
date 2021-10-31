@@ -1,53 +1,44 @@
 package com.ibm.coursefinder.controllers;
 
-import com.ibm.coursefinder.entities.Course;
+import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.services.CourseService;
-import com.ibm.coursefinder.services.ProfessorService;
-import com.ibm.coursefinder.userroles.Professor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
+//@RestController
+//@RequestMapping("courses")
 @Controller
-@RequestMapping("courses")
 public class CourseController {
     CourseService service;
-    ProfessorService profService;
 
-
-    public CourseController(CourseService service, ProfessorService profService) {
+    public CourseController(CourseService service) {
         this.service = service;
-        this.profService = profService;
-        var prof = new Professor();
-        prof.setName("Carol");
-        prof.setDateOfBirth(new Date());
-        profService.post(prof);
-        var course = new Course();
-        course.setName("Matematica");
-        course.setProfessor(profService.get(1L).get());
-        service.post(course);
     }
 
-    @GetMapping("")
+    @GetMapping("courses")
+    public String courses(Model model) {
+
+        String intro = "Courses available:";
+        model.addAttribute("intro", intro);
+
+        List<CourseDTO> courses = getAllCourses();
+        model.addAttribute("course", courses);
+
+        return "courses";
+    }
+
+    //@GetMapping("courses")
     public @ResponseBody
-    List<Course> getAll() {
+    List<CourseDTO> getAllCourses() {
         return service.getAll();
     }
 
     @PostMapping("/new")
     public @ResponseBody
-    Course post(Course course) {
+    CourseDTO post(CourseDTO course) {
         return service.post(course);
     }
-
-
-    @GetMapping("/{id}")
-    public String get(@PathVariable Long id, Model model) {
-        model.addAttribute("course", service.get(id).get());
-        return "courseView";
-    }
-
 }
