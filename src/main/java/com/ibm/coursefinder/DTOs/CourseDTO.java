@@ -1,6 +1,7 @@
 package com.ibm.coursefinder.DTOs;
 
 import com.ibm.coursefinder.entities.Course;
+import com.ibm.coursefinder.entities.CourseDetails;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,9 +10,11 @@ public class CourseDTO {
     private String name;
     private Long id;
     private List<ProfessorDTO> professorList;
+    private CourseDetails courseDetails;
 
     public CourseDTO(Course courseDAO) {
         name = courseDAO.getName();
+        courseDetails = courseDAO.getCourseDetails();
         id = courseDAO.getId();
     }
 

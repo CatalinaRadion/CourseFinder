@@ -16,6 +16,12 @@ public class Course {
     @Column(name = "name")
     private String name;
 
+    @OneToOne(cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            optional = false)
+    private CourseDetails courseDetails;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
@@ -48,6 +54,20 @@ public class Course {
         this.professor = professor;
     }
 
+    public CourseDetails getCourseDetails() {
+        return courseDetails;
+    }
+
+    public void setCourseDetails(CourseDetails courseDetails) {
+        if(courseDetails == null) {
+            if(this.courseDetails != null) {
+                this.courseDetails.setCourse(null);
+            }
+        } else {
+            courseDetails.setCourse(this);
+        }
+        this.courseDetails = courseDetails;
+    }
 
     public String getName() {
         return name;

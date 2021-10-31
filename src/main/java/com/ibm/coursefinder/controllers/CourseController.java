@@ -2,12 +2,15 @@ package com.ibm.coursefinder.controllers;
 
 import com.ibm.coursefinder.DTOs.CourseDTO;
 import com.ibm.coursefinder.services.CourseService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("courses")
+//@RestController
+//@RequestMapping("courses")
+@Controller
 public class CourseController {
     CourseService service;
 
@@ -15,9 +18,21 @@ public class CourseController {
         this.service = service;
     }
 
-    @GetMapping("")
+    @GetMapping("courses")
+    public String courses(Model model) {
+
+        String intro = "Courses available:";
+        model.addAttribute("intro", intro);
+
+        List<CourseDTO> courses = getAllCourses();
+        model.addAttribute("course", courses);
+
+        return "courses";
+    }
+
+    //@GetMapping("courses")
     public @ResponseBody
-    List<CourseDTO> getAll() {
+    List<CourseDTO> getAllCourses() {
         return service.getAll();
     }
 
