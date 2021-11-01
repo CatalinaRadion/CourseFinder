@@ -7,11 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Professor extends User {
+public class Professor extends User implements Serializable {
     @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "professor_id")
     private Set<Course> courses = new HashSet<>();
@@ -27,5 +28,9 @@ public class Professor extends User {
     public Professor() {
     }
 
-
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "} " + super.toString();
+    }
 }

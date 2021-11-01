@@ -3,10 +3,11 @@ package com.ibm.coursefinder.entities;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class Course {
+public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -17,20 +18,15 @@ public class Course {
 
     @OneToOne(cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.LAZY,
             optional = false)
     private CourseDetails courseDetails;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "professor_id", nullable = false)
     private Professor professor;
 
     @OneToMany(mappedBy = "course")
     private Set<StudentCourse> studentCourses;
-
-    public Course(Course course) {
-        setName(course.getName());
-    }
 
     public Course() {
     }

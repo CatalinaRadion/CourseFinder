@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<span th:text="${intro}" />
+<span th:text="${intro}"/>
 
 <div class="col-8">
     <table class="table table-bordered table-striped">
@@ -22,7 +22,7 @@
         <tbody>
         <tr th:each="course : ${course}">
             <td th:text="${course.name}"></td>
-            <td th:text="${course.courseDetails}"></td>
+            <td th:text="${course.courseDetails.courseDetails}"></td>
         </tr>
 
         </tbody>
