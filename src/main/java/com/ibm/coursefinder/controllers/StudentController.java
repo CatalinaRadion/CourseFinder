@@ -4,7 +4,10 @@ import com.ibm.coursefinder.services.StudentService;
 import com.ibm.coursefinder.userroles.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -36,8 +39,15 @@ public class StudentController {
     }
 
     @PostMapping("/new")
-    public @ResponseBody
-    Student post(Student students) {
-        return service.post(students);
+    public String post(Student student) {
+        service.post(student);
+        return "redirect:/students";
+    }
+
+    @GetMapping("/new")
+    public String postPage(Model model) {
+        var student = new Student();
+        model.addAttribute("student", student);
+        return "students/new";
     }
 }

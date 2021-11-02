@@ -17,37 +17,29 @@
 
         <!-- Main Content -->
         <div id="content">
+
             <div th:replace="fragments/topbar :: topbar"></div>
+
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!--                &lt;!&ndash; Page Heading &ndash;&gt;-->
-                <!--                <h1 class="h3 mb-2 text-gray-800">Courses</h1>-->
 
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Courses</h6>
+                <h1>Create user</h1>
+                <form th:object="${student}"
+                      th:action="@{/students/new}"
+                      method="post" class="col-4">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" type="text"
+                               th:field="*{name}" class="form-control">
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Course</th>
-                                    <th>Course details</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="course : ${courses}">
-                                    <td th:text="${course.name}"></td>
-                                    <td th:text="${course.courseDetails.courseDetails}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="form-group">
+                        <label for="birth">Date Of Birth</label>
+                        <input id="birth" type="date"
+                               th:field="*{dateOfBirth}" class="form-control">
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-primary">Create student</button>
+                </form>
 
             </div>
             <!-- /.container-fluid -->
