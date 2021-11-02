@@ -5,21 +5,38 @@
     <div th:replace="fragments/head :: head"></div>
 </head>
 
-
 <body id="page-top">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-
+    <!-- Sidebar -->
     <div th:replace="fragments/sidebar :: sidebar"></div>
+    <!-- End of Sidebar -->
+
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
         <div id="content">
 
-            <div th:replace="fragments/topbar :: topbar"></div>
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <form class="form-inline">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </form>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
@@ -54,6 +71,9 @@
         </div>
         <!-- End of Main Content -->
 
+        <!-- Footer -->
+        <div th:replace="fragments/footer :: footer"></div>
+        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -66,22 +86,8 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/js/demo/datatables-demo.js"></script>
+<!-- Scripts -->
+<div th:replace="fragments/scripts :: scripts"></div>
 
 </body>
 
