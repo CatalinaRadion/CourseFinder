@@ -43,9 +43,14 @@ public class CourseController {
         model.addAttribute("intro", intro);
 
         List<Course> courses = service.getAll();
-        model.addAttribute("course", courses);
+        model.addAttribute("courses", courses);
 
-        return "courses";
+        return "courses/index";
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 
 
