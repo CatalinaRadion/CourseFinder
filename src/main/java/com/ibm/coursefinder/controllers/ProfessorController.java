@@ -19,9 +19,12 @@ public class ProfessorController {
     }
 
     @GetMapping("")
-    public @ResponseBody
-    List<Professor> getAll() {
-        return service.getAll();
+    public String students(Model model) {
+
+        List<Professor> professors = service.getAll();
+        model.addAttribute("professors", professors);
+
+        return "professors/index";
     }
 
     @PostMapping("/new")

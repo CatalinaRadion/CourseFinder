@@ -34,13 +34,18 @@ public class CourseController {
         detail.setCourseDetails("Algebra 1");
         course.setCourseDetails(detail);
         service.post(course);
+
+        var course2 = new Course();
+        course2.setName("Fizica");
+        course2.setProfessor(prof);
+        var detail2 = new CourseDetails();
+        detail2.setCourseDetails("Mecanica cuantica");
+        course2.setCourseDetails(detail2);
+        service.post(course2);
     }
 
     @GetMapping("")
     public String courses(Model model) {
-
-        String intro = "Courses available:";
-        model.addAttribute("intro", intro);
 
         List<Course> courses = service.getAll();
         model.addAttribute("courses", courses);
@@ -60,7 +65,7 @@ public class CourseController {
         Course course = service.get(id).get();
         model.addAttribute("course", course);
 
-        return "courses";
+        return "courseView";
     }
 
     @PostMapping("/new")

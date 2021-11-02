@@ -5,6 +5,7 @@
     <div th:replace="fragments/head :: head"></div>
 </head>
 
+
 <body id="page-top">
 
 <!-- Page Wrapper -->
@@ -83,27 +84,24 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-<!--                &lt;!&ndash; Page Heading &ndash;&gt;-->
-<!--                <h1 class="h3 mb-2 text-gray-800">Courses</h1>-->
-
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Courses</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Professors</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Course</th>
-                                    <th>Course details</th>
+                                    <th>Name</th>
+                                    <th>Date of birth</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="course : ${courses}">
-                                    <td th:text="${course.name}"></td>
-                                    <td th:text="${course.courseDetails.courseDetails}"></td>
+                                <tr th:each="professor : ${professors}">
+                                    <td th:text="${professor.name}"></td>
+                                    <td th:text="${professor.dateOfBirth}"></td>
                                 </tr>
                                 </tbody>
                             </table>
