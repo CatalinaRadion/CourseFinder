@@ -5,55 +5,13 @@
     <div th:replace="fragments/head :: head"></div>
 </head>
 
-
 <body id="page-top">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">Course Finder</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="students">
-                <i class="fas fa-laptop"></i>
-                <span>Students</span></a>
-        </li>
-
-        <li class="nav-item active">
-            <a class="nav-link" href="professors">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Professors</span></a>
-        </li>
-
-        <li class="nav-item active">
-            <a class="nav-link" href="courses">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Courses</span></a>
-        </li>
-
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-    </ul>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -71,8 +29,6 @@
                         <i class="fa fa-bars"></i>
                     </button>
                 </form>
-
-
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -116,13 +72,7 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Course Finder 2021</span>
-                </div>
-            </div>
-        </footer>
+        <div th:replace="fragments/footer :: footer"></div>
         <!-- End of Footer -->
 
     </div>
@@ -136,22 +86,8 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
+<!-- Scripts -->
+<div th:replace="fragments/scripts :: scripts"></div>
 
 </body>
 
