@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
