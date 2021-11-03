@@ -2,11 +2,11 @@ package com.ibm.coursefinder.services;
 
 import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.repositories.CourseRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class CourseService extends RESTService<Course, Long> {
 
     public CourseService(CourseRepository repo) {

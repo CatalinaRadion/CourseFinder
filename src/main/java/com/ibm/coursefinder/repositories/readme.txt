@@ -1,1 +1,0 @@
-They define the rest actions that can happen on the entities.

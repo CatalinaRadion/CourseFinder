@@ -4,6 +4,9 @@ package com.ibm.coursefinder.userroles;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
@@ -26,7 +29,14 @@ public abstract class User {
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        var localDate = dateOfBirth.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        if (Period.between(LocalDate.from(localDate), LocalDate.now()).getYears() >= 13) {
+            this.dateOfBirth = dateOfBirth;
+        } else {
+            throw new RuntimeException("User must be over 13 years old");
+        }
     }
 
     public Long getId() {

@@ -37,12 +37,14 @@
                                 <tr>
                                     <th>Course</th>
                                     <th>Course details</th>
+                                    <th>Professor</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="course : ${courses}">
                                     <td th:text="${course.name}"></td>
                                     <td th:text="${course.courseDetails.courseDetails}"></td>
+                                    <td th:text="${course.professor.name}"></td>
                                 </tr>
                                 </tbody>
                             </table>
