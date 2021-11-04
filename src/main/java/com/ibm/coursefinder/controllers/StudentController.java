@@ -1,15 +1,10 @@
 package com.ibm.coursefinder.controllers;
 
-import com.ibm.coursefinder.entities.StudentCourse;
-import com.ibm.coursefinder.entities.StudentCourseId;
 import com.ibm.coursefinder.services.StudentService;
 import com.ibm.coursefinder.userroles.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,13 +26,11 @@ public class StudentController {
         return "students/index";
     }
 
-    @GetMapping("/{id}")
-    public String getById(@PathVariable Long id, Model model) {
-
-        Student student = service.get(id).get();
+    @GetMapping("/new")
+    public String postPage(Model model) {
+        var student = new Student();
         model.addAttribute("student", student);
-
-        return "studentView";
+        return "students/new";
     }
 
     @PostMapping("/new")
@@ -46,10 +39,30 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @GetMapping("/new")
-    public String postPage(Model model) {
-        var student = new Student();
-        model.addAttribute("student", student);
-        return "students/new";
+
+    @GetMapping("/api")
+    public @ResponseBody
+    List<Student> allStudents() {
+        return service.getAll();
     }
+
+    @GetMapping("/{id}")
+    public @ResponseBody
+    List<Student> studentById(@PathVariable Long id) {
+        return service.getAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public @ResponseBody
+    Student deleteStudent(@PathVariable Long id) {
+        return service.delete(id).get();
+    }
+
+    @PutMapping("/{id}")
+    public @ResponseBody
+    Student deleteStudent(@PathVariable Long id, Student student) {
+        return service.put(id, student).get();
+    }
+
+
 }
