@@ -1,5 +1,7 @@
 package com.ibm.coursefinder.controllers;
 
+import com.ibm.coursefinder.entities.StudentCourse;
+import com.ibm.coursefinder.entities.StudentCourseId;
 import com.ibm.coursefinder.services.StudentService;
 import com.ibm.coursefinder.userroles.Student;
 import org.springframework.stereotype.Controller;

@@ -1,9 +1,13 @@
 package com.ibm.coursefinder.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ibm.coursefinder.userroles.Professor;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,10 +27,12 @@ public class Course implements Serializable {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "professor_id", nullable = false)
+    @JsonIgnore
     private Professor professor;
 
     @OneToMany(mappedBy = "course")
-    private Set<StudentCourse> studentCourses;
+    @JsonIgnore
+    private Set<StudentCourse> studentCourses=new HashSet<>();
 
     public Course() {
     }
@@ -41,11 +47,11 @@ public class Course implements Serializable {
     }
 
 
-    public com.ibm.coursefinder.userroles.Professor getProfessor() {
+    public Professor getProfessor() {
         return professor;
     }
 
-    public void setProfessor(com.ibm.coursefinder.userroles.Professor professor) {
+    public void setProfessor(Professor professor) {
         this.professor = professor;
     }
 
@@ -80,5 +86,8 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-
+    private void writeObject(ObjectOutputStream oos)
+            throws IOException {
+        oos.writeObject("12");
+    }
 }

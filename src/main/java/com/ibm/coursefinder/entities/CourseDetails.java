@@ -1,6 +1,10 @@
 package com.ibm.coursefinder.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 @Entity
 public class CourseDetails {
@@ -15,6 +19,7 @@ public class CourseDetails {
 
     @OneToOne
     @JoinColumn(name = "course_id")
+    @JsonIgnore
     private Course course;
 
     public Long getId() {
@@ -39,5 +44,16 @@ public class CourseDetails {
 
     public void setCourseDetails(String courseDetails) {
         this.courseDetails = courseDetails;
+    }
+
+    private void writeObject(ObjectOutputStream oos)
+            throws IOException {
+                oos.writeObject(courseDetails.toString());
+    }
+    @Override
+    public String toString() {
+        return "CourseDetails{" +
+                "courseDetails='" + courseDetails + '\'' +
+                '}';
     }
 }

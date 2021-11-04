@@ -30,14 +30,7 @@ public abstract class User {
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        var localDate = dateOfBirth.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        if (Period.between(LocalDate.from(localDate), LocalDate.now()).getYears() >= 13) {
             this.dateOfBirth = dateOfBirth;
-        } else {
-            throw new RuntimeException("User must be over 13 years old");
-        }
     }
 
     public Long getId() {

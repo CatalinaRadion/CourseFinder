@@ -1,6 +1,7 @@
 package com.ibm.coursefinder.userroles;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ibm.coursefinder.entities.Course;
 
 import javax.persistence.CascadeType;
