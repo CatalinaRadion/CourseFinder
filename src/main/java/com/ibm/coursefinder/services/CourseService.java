@@ -4,8 +4,6 @@ import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.repositories.CourseRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class CourseService extends RESTService<Course, Long> {
 
@@ -14,11 +12,11 @@ public class CourseService extends RESTService<Course, Long> {
     }
 
     @Override
-    public Optional<Course> put(Long id, Course newObject) {
+    public Course put(Long id, Course newObject) {
         var optionalCourse = repo.findById(id);
         optionalCourse.ifPresent(course -> {
             course.setName(newObject.getName());
         });
-        return optionalCourse;
+        return optionalCourse.get();
     }
 }
