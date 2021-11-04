@@ -39,6 +39,11 @@ public class StudentController {
         return "redirect:/students";
     }
 
+    @PostMapping("/new/api")
+    public Student postApi(Student student) {
+        return service.post(student);
+
+    }
 
     @GetMapping("/api")
     public @ResponseBody
@@ -48,8 +53,8 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public @ResponseBody
-    List<Student> studentById(@PathVariable Long id) {
-        return service.getAll();
+    Student studentById(@PathVariable Long id) {
+        return service.get(id).get();
     }
 
     @DeleteMapping("/{id}")
