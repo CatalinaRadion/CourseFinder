@@ -5,10 +5,12 @@ import com.ibm.coursefinder.entities.StudentCourseId;
 import com.ibm.coursefinder.services.StudentCourseService;
 import com.ibm.coursefinder.services.StudentService;
 import com.ibm.coursefinder.userroles.Student;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,9 +48,13 @@ public class StudentController {
     }
 
     @PostMapping("/new/api")
-    public @ResponseBody
-    Student postApi(@RequestBody Student student) {
-        return service.post(student);
+    public ResponseEntity<Student> postApi(@Valid @RequestBody Student student) {
+
+        if (student.getDateOfBirth() == null)
+            return ResponseEntity.badRequest().body(student);
+        if (student.getName() == null)
+            return ResponseEntity.badRequest().body(student);
+        return ResponseEntity.ok(service.post(student));
 
     }
 
@@ -72,10 +78,10 @@ public class StudentController {
 
     @PutMapping("/{id}")
     public @ResponseBody
-    Student putStudent(@PathVariable Long id, @RequestBody Student student) {
+    Student putStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
         return service.put(id, student);
     }
-    
+
     @PostMapping("/enroll")
     public @ResponseBody
     StudentCourse enrollStudent(@RequestBody StudentCourseId id) {
@@ -84,7 +90,7 @@ public class StudentController {
 
     @DeleteMapping("/enroll")
     public @ResponseBody
-    Optional<StudentCourse> unenrollStudent(@RequestBody StudentCourseId id) {
+    Optional<StudentCourse> unrollStudent(@RequestBody StudentCourseId id) {
         return studentCourseService.delete(id);
     }
 

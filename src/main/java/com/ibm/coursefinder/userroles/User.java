@@ -4,9 +4,8 @@ package com.ibm.coursefinder.userroles;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -17,12 +16,14 @@ public abstract class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
+    @NotBlank
     private String name;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date_of_birth")
+    @NotNull
     private Date dateOfBirth;
 
     public Date getDateOfBirth() {
@@ -30,7 +31,7 @@ public abstract class User {
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Long getId() {
