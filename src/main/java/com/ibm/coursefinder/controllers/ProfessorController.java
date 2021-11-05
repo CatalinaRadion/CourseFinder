@@ -62,7 +62,7 @@ public class ProfessorController {
     @PutMapping("/{id}")
     public @ResponseBody
     Professor put(@PathVariable Long id, @RequestBody Professor professor) {
-        return service.put(id, professor).get();
+        return service.put(id, professor);
     }
 
     @DeleteMapping("/{id}")
