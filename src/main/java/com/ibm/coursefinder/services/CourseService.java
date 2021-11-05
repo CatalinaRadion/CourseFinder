@@ -1,6 +1,7 @@
 package com.ibm.coursefinder.services;
 
 import com.ibm.coursefinder.entities.Course;
+import com.ibm.coursefinder.entities.CourseDetails;
 import com.ibm.coursefinder.repositories.CourseRepository;
 import org.springframework.stereotype.Service;
 
