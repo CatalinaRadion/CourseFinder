@@ -20,12 +20,12 @@ public class Course implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            orphanRemoval = true,
+    @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST},
+            //orphanRemoval = true,
             optional = false)
     private CourseDetails courseDetails;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "professor_id", nullable = false)
     @JsonIgnore
     private Professor professor;

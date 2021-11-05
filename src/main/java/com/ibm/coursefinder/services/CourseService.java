@@ -18,6 +18,6 @@ public class CourseService extends RESTService<Course, Long> {
         optionalCourse.ifPresent(course -> {
             course.setName(newObject.getName());
         });
-        return optionalCourse.get();
+        return repo.save(optionalCourse.get());
     }
 }

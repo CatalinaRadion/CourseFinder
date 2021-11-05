@@ -18,6 +18,6 @@ public class ProfessorService extends RESTService<Professor, Long> {
             professor.setName(newObject.getName());
             professor.setDateOfBirth(newObject.getDateOfBirth());
         });
-        return optionalProfessor.get();
+        return repo.save(optionalProfessor.get());
     }
 }
