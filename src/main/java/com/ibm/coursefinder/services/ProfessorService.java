@@ -4,8 +4,6 @@ import com.ibm.coursefinder.repositories.ProfessorRepository;
 import com.ibm.coursefinder.userroles.Professor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class ProfessorService extends RESTService<Professor, Long> {
 
@@ -14,12 +12,12 @@ public class ProfessorService extends RESTService<Professor, Long> {
     }
 
     @Override
-    public Optional<Professor> put(Long id, Professor newObject) {
+    public Professor put(Long id, Professor newObject) {
         var optionalProfessor = repo.findById(id);
         optionalProfessor.ifPresent(professor -> {
             professor.setName(newObject.getName());
             professor.setDateOfBirth(newObject.getDateOfBirth());
         });
-        return optionalProfessor;
+        return optionalProfessor.get();
     }
 }

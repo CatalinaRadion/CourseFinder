@@ -33,5 +33,5 @@ public abstract class RESTService<T, ID> {
 
     //shouldn't be done by reflection
     //could be, but shouldn't
-    public abstract Optional<T> put(ID id, T newObject);
+    public abstract T put(ID id, T newObject);
 }
