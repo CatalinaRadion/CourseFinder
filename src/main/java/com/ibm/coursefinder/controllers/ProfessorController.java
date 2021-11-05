@@ -4,13 +4,14 @@ import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.services.CourseService;
 import com.ibm.coursefinder.services.ProfessorService;
 import com.ibm.coursefinder.userroles.Professor;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("professors")
 public class ProfessorController {
     ProfessorService service;
@@ -54,9 +55,12 @@ public class ProfessorController {
     }
 
     @PostMapping("/new")
-    public @ResponseBody
-    Professor post(@RequestBody Professor professor) {
-        return service.post(professor);
+    public ResponseEntity<Professor> post(@Valid @RequestBody Professor professor) {
+        if (professor.getDateOfBirth() == null)
+            return ResponseEntity.badRequest().body(professor);
+        if (professor.getName() == null)
+            return ResponseEntity.badRequest().body(professor);
+        return ResponseEntity.ok(service.post(professor));
     }
 
     @PutMapping("/{id}")

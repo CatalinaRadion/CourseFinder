@@ -20,10 +20,10 @@ public abstract class User {
     @NotBlank
     private String name;
 
+    @NotNull
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "date_of_birth")
-    @NotNull
+    @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
 
     public Date getDateOfBirth() {
@@ -49,6 +49,10 @@ public abstract class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean validate() {
+        return (dateOfBirth!=null && name!=null && !name.isEmpty());
     }
 
     @Override

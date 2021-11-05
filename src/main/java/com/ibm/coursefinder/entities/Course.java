@@ -20,8 +20,7 @@ public class Course implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST},
-            //orphanRemoval = true,
+    @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE},
             optional = false)
     private CourseDetails courseDetails;
 
