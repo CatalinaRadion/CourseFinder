@@ -16,8 +16,9 @@ public class ProfessorService extends RESTService<Professor, Long> {
     @Override
     public Optional<Professor> put(Long id, Professor newObject) {
         var optionalProfessor = repo.findById(id);
-        optionalProfessor.ifPresent(course -> {
-            course.setName(newObject.getName());
+        optionalProfessor.ifPresent(professor -> {
+            professor.setName(newObject.getName());
+            professor.setDateOfBirth(newObject.getDateOfBirth());
         });
         return optionalProfessor;
     }

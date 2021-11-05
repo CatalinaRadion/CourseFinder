@@ -1,6 +1,5 @@
 package com.ibm.coursefinder.controllers;
 
-
 import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.services.CourseService;
 import com.ibm.coursefinder.services.ProfessorService;
@@ -35,13 +34,24 @@ public class ProfessorController {
     public @ResponseBody
     Course post(@PathVariable Long id,@RequestBody Course course) {
 
-        var prof=service.get(id).get();
-        course.setProfessor(prof);
-        course=courseService.post(course);
+        var professor = service.get(id).get();
+        course.setProfessor(professor);
+        course = courseService.post(course);
 
         return course;
     }
 
+    @GetMapping("/api")
+    public @ResponseBody
+    List<Professor> allProfessors() {
+        return service.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public @ResponseBody
+    Professor professorById(@PathVariable Long id) {
+        return service.get(id).get();
+    }
 
     @PostMapping("/new")
     public @ResponseBody
@@ -49,10 +59,16 @@ public class ProfessorController {
         return service.post(professor);
     }
 
-    @GetMapping("/{id}")
-    public @ResponseBody Professor get(@PathVariable Long id) {
-        return service.get(id).get();
+    @PutMapping("/{id}")
+    public @ResponseBody
+    Professor put(@PathVariable Long id, @RequestBody Professor professor) {
+        return service.put(id, professor).get();
     }
 
+    @DeleteMapping("/{id}")
+    public @ResponseBody
+    Professor deleteProfessor(@PathVariable Long id) {
+        return service.delete(id).get();
+    }
 
 }

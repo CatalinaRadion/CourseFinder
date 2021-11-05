@@ -31,19 +31,28 @@ public class CourseController {
         return "index";
     }
 
+    @GetMapping("/api")
+    public @ResponseBody
+    List<Course> allCourses() {
+        return service.getAll();
+    }
 
     @GetMapping("/{id}")
-    public String getById(@PathVariable Long id, Model model) {
-
-        Course course = service.get(id).get();
-        model.addAttribute("course", course);
-
-        return "courseView";
-    }
-
-    @PostMapping("/new")
     public @ResponseBody
-    Course post(Course course) {
-        return service.post(course);
+    Course courseById(@PathVariable Long id) {
+        return service.get(id).get();
     }
+
+    @DeleteMapping("{id}")
+    public @ResponseBody
+    Course deleteCourse(@PathVariable Long id) {
+        return service.delete(id).get();
+    }
+
+    @PutMapping("/{id}")
+    public @ResponseBody
+    Course putCourse(@PathVariable Long id, @RequestBody Course course) {
+        return service.put(id, course).get();
+    }
+
 }
