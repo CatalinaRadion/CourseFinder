@@ -89,4 +89,12 @@ public class Course implements Serializable {
             throws IOException {
         oos.writeObject("12");
     }
+
+    public boolean validate() {
+        return (name != null
+                && !name.isEmpty()
+                && courseDetails != null
+                && courseDetails.getCourseDetails() != null
+                && !courseDetails.getCourseDetails().isEmpty());
+    }
 }

@@ -49,12 +49,10 @@ public class StudentController {
 
     @PostMapping("/new/api")
     public ResponseEntity<Student> postApi(@Valid @RequestBody Student student) {
-
         if(!student.validate()) {
             return ResponseEntity.badRequest().body(student);
         }
         return ResponseEntity.ok(service.post(student));
-
     }
 
     @GetMapping("/api")

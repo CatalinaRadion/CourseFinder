@@ -32,14 +32,17 @@ public class ProfessorController {
     }
 
     @PostMapping("/addCourse/{id}")
-    public @ResponseBody
-    Course post(@PathVariable Long id,@RequestBody Course course) {
+    public ResponseEntity<Course> post(@PathVariable Long id,@RequestBody Course course) {
 
         var professor = service.get(id).get();
         course.setProfessor(professor);
         course = courseService.post(course);
 
-        return course;
+        if(!course.validate()){
+            return ResponseEntity.badRequest().body(course);
+        }
+
+        return ResponseEntity.ok(courseService.post(course));
     }
 
     @GetMapping("/api")
@@ -56,10 +59,9 @@ public class ProfessorController {
 
     @PostMapping("/new")
     public ResponseEntity<Professor> post(@Valid @RequestBody Professor professor) {
-        if (professor.getDateOfBirth() == null)
+        if(!professor.validate()) {
             return ResponseEntity.badRequest().body(professor);
-        if (professor.getName() == null)
-            return ResponseEntity.badRequest().body(professor);
+        }
         return ResponseEntity.ok(service.post(professor));
     }
 
