@@ -49,7 +49,7 @@ public class StudentController {
 
     @PostMapping("/new/api")
     public ResponseEntity<Student> postApi(@Valid @RequestBody Student student) {
-        if(!student.validate()) {
+        if (!student.validate()) {
             return ResponseEntity.badRequest().body(student);
         }
         return ResponseEntity.ok(service.post(student));
@@ -61,10 +61,21 @@ public class StudentController {
         return service.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = {"/{id}", "/student"})
     public @ResponseBody
-    Student studentById(@PathVariable Long id) {
-        return service.get(id).get();
+    ResponseEntity<Student> studentById(@PathVariable(required = false) Long id
+            , @RequestParam(value = "id", required = false) Long studentId) {
+        if (id != null) {
+            return service.get(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.badRequest().body(null));
+        }
+        if (studentId != null) {
+            return service.get(studentId)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.badRequest().body(null));
+        }
+        return ResponseEntity.badRequest().body(null);
     }
 
     @DeleteMapping("/{id}")
