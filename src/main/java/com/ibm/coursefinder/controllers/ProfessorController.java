@@ -4,6 +4,7 @@ import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.services.CourseService;
 import com.ibm.coursefinder.services.ProfessorService;
 import com.ibm.coursefinder.userroles.Professor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,11 @@ public class ProfessorController {
         return ResponseEntity.ok(courseService.post(course).get());
     }
 
-    @GetMapping("/api")
+    @GetMapping(value = "/api",
+             produces = { MediaType.APPLICATION_JSON_VALUE,
+                          MediaType.APPLICATION_XML_VALUE,
+                          MediaType.TEXT_PLAIN_VALUE })
+    //@Produces("text/plain")
     public @ResponseBody
     List<Professor> allProfessors() {
         return service.getAll();
@@ -57,7 +62,9 @@ public class ProfessorController {
         return service.get(id).get();
     }
 
-    @PostMapping("/new")
+    @PostMapping(value = "/new",
+                 consumes = { MediaType.APPLICATION_JSON_VALUE,
+                              MediaType.APPLICATION_XML_VALUE })
     public ResponseEntity<Professor> post(@Valid @RequestBody Professor professor) {
         if (!professor.validate()) {
             return ResponseEntity.badRequest().body(professor);
