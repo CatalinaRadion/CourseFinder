@@ -2,19 +2,24 @@ package com.ibm.coursefinder.controllers;
 
 import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.services.CourseService;
+import com.ibm.coursefinder.services.StudentCourseService;
+import com.ibm.coursefinder.userroles.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
 @RequestMapping("courses")
 public class CourseController {
     CourseService service;
+    StudentCourseService studentCourseService;
 
-    public CourseController(CourseService service) {
+    public CourseController(CourseService service, StudentCourseService studentCourseService) {
         this.service = service;
+        this.studentCourseService = studentCourseService;
     }
 
     @GetMapping("")
@@ -53,6 +58,12 @@ public class CourseController {
     public @ResponseBody
     Course putCourse(@PathVariable Long id, @RequestBody Course course) {
         return service.put(id, course);
+    }
+
+    @GetMapping("/{id}/students")
+    public @ResponseBody
+    Collection<Student> studentsByCourseId(@PathVariable Long id) {
+        return studentCourseService.getAllStudentsAssignedToCourseId(id);
     }
 
 }

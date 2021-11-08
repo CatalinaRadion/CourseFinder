@@ -6,8 +6,10 @@ import com.ibm.coursefinder.entities.StudentCourseId;
 import com.ibm.coursefinder.repositories.CourseRepository;
 import com.ibm.coursefinder.repositories.StudentCourseRepository;
 import com.ibm.coursefinder.repositories.StudentRepository;
+import com.ibm.coursefinder.userroles.Student;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +46,10 @@ public class StudentCourseService {
         var student = studentRepo.findById(id.getStudentId()).get();
         var stcourse = new StudentCourse(student, course);
         return repo.save(stcourse);
+    }
+
+    public Collection<Student> getAllStudentsAssignedToCourseId(Long courseId) {
+        return repo.getStudentsByCourseId(courseId);
     }
 
 
