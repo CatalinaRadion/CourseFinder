@@ -52,7 +52,7 @@ public class StudentController {
         if (!student.validate()) {
             return ResponseEntity.badRequest().body(student);
         }
-        return ResponseEntity.ok(service.post(student));
+        return ResponseEntity.ok(service.post(student).get());
     }
 
     @GetMapping("/api")
@@ -87,13 +87,13 @@ public class StudentController {
     @PutMapping("/{id}")
     public @ResponseBody
     Student putStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
-        return service.put(id, student);
+        return service.put(id, student).get();
     }
 
     @PostMapping("/enroll")
     public @ResponseBody
     StudentCourse enrollStudent(@RequestBody StudentCourseId id) {
-        return studentCourseService.post(id);
+        return studentCourseService.post(id).get();
     }
 
     @DeleteMapping("/enroll")

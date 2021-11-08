@@ -57,7 +57,7 @@ public class CourseController {
     @PutMapping("/{id}")
     public @ResponseBody
     Course putCourse(@PathVariable Long id, @RequestBody Course course) {
-        return service.put(id, course);
+        return service.put(id, course).get();
     }
 
     @GetMapping("/{id}/students")
