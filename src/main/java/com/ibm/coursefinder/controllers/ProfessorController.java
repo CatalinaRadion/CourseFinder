@@ -17,9 +17,9 @@ public class ProfessorController {
     ProfessorService service;
     CourseService courseService;
 
-    public ProfessorController(ProfessorService service,CourseService courseService) {
+    public ProfessorController(ProfessorService service, CourseService courseService) {
         this.service = service;
-        this.courseService=courseService;
+        this.courseService = courseService;
     }
 
     @GetMapping("")
@@ -32,17 +32,17 @@ public class ProfessorController {
     }
 
     @PostMapping("/addCourse/{id}")
-    public ResponseEntity<Course> post(@PathVariable Long id,@RequestBody Course course) {
+    public ResponseEntity<Course> post(@PathVariable Long id, @RequestBody Course course) {
 
         var professor = service.get(id).get();
         course.setProfessor(professor);
-        course = courseService.post(course);
+        course = courseService.post(course).get();
 
-        if(!course.validate()){
+        if (!course.validate()) {
             return ResponseEntity.badRequest().body(course);
         }
 
-        return ResponseEntity.ok(courseService.post(course));
+        return ResponseEntity.ok(courseService.post(course).get());
     }
 
     @GetMapping("/api")
@@ -59,16 +59,16 @@ public class ProfessorController {
 
     @PostMapping("/new")
     public ResponseEntity<Professor> post(@Valid @RequestBody Professor professor) {
-        if(!professor.validate()) {
+        if (!professor.validate()) {
             return ResponseEntity.badRequest().body(professor);
         }
-        return ResponseEntity.ok(service.post(professor));
+        return ResponseEntity.ok(service.post(professor).get());
     }
 
     @PutMapping("/{id}")
     public @ResponseBody
     Professor put(@PathVariable Long id, @RequestBody Professor professor) {
-        return service.put(id, professor);
+        return service.put(id, professor).get();
     }
 
     @DeleteMapping("/{id}")

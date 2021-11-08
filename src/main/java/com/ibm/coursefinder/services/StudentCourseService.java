@@ -41,11 +41,15 @@ public class StudentCourseService {
         return opt;
     }
 
-    public StudentCourse post(StudentCourseId id) {
-        var course = courseRepo.findById(id.getCourseId()).get();
-        var student = studentRepo.findById(id.getStudentId()).get();
-        var stcourse = new StudentCourse(student, course);
-        return repo.save(stcourse);
+    public Optional<StudentCourse> post(StudentCourseId id) {
+        try {
+            var course = courseRepo.findById(id.getCourseId()).get();
+            var student = studentRepo.findById(id.getStudentId()).get();
+            var studentCourse = new StudentCourse(student, course);
+            return Optional.of(repo.save(studentCourse));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     public Collection<Student> getAllStudentsAssignedToCourseId(Long courseId) {

@@ -27,11 +27,15 @@ public abstract class RESTService<T, ID> {
         return opt;
     }
 
-    public T post(T object) {
-        return repo.save(object);
+    public Optional<T> post(T object) {
+        try {
+            return Optional.of(repo.save(object));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     //shouldn't be done by reflection
     //could be, but shouldn't
-    public abstract T put(ID id, T newObject);
+    public abstract Optional<T> put(ID id, T newObject);
 }

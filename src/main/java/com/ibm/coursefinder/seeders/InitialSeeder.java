@@ -37,7 +37,7 @@ public class InitialSeeder {
         calendar.set(1990, Calendar.AUGUST, 1);
         prof.setDateOfBirth(calendar.getTime());
         prof.setName("Carol");
-        prof = profService.post(prof);
+        prof = profService.post(prof).get();
 
     }
 
@@ -47,7 +47,7 @@ public class InitialSeeder {
         calendar.set(2000, Calendar.OCTOBER, 31);
         student.setDateOfBirth(calendar.getTime());
         student.setName("Albert");
-        student = studentService.post(student);
+        student = studentService.post(student).get();
 
     }
 
