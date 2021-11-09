@@ -14,8 +14,8 @@ import java.util.Set;
 
 @Entity
 public class Professor extends User implements Serializable {
-    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
-    @JoinColumn(name = "professor_id")
+    @OneToMany(cascade = {CascadeType.PERSIST},orphanRemoval = true, mappedBy = "professor")
+
     private Set<Course> courses = new HashSet<>();
 
     public Set<Course> getCourses() {

@@ -15,10 +15,14 @@ public class CourseService extends RESTService<Course, Long> {
 
     @Override
     public Optional<Course> put(Long id, Course newObject) {
-        var optionalCourse = repo.findById(id);
-        optionalCourse.ifPresent(course -> {
-            course.setName(newObject.getName());
-        });
-        return optionalCourse;
+        try {
+            var optionalCourse = repo.findById(id);
+            optionalCourse.ifPresent(course -> {
+                course.setName(newObject.getName());
+            });
+            return Optional.of(repo.save(optionalCourse.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }
