@@ -51,7 +51,7 @@ public class StudentCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentCourse that = (StudentCourse) o;
-        return Objects.equals(student, that.student) && Objects.equals(course, that.course);
+        return Objects.equals(id, that.id);
     }
 
     @Override
@@ -59,4 +59,7 @@ public class StudentCourse {
         return Objects.hash(student, course);
     }
 
+    public StudentCourseId getId() {
+        return id;
+    }
 }
