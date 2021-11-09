@@ -6,13 +6,14 @@ import com.ibm.coursefinder.services.ProfessorService;
 import com.ibm.coursefinder.userroles.Professor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("professors")
 public class ProfessorController {
     ProfessorService service;
@@ -24,7 +25,7 @@ public class ProfessorController {
     }
 
     @GetMapping("")
-    public String students(Model model) {
+    public String professors(Model model) {
 
         List<Professor> professors = service.getAll();
         model.addAttribute("professors", professors);
@@ -47,9 +48,9 @@ public class ProfessorController {
     }
 
     @GetMapping(value = "/api",
-             produces = { MediaType.APPLICATION_JSON_VALUE,
-                          MediaType.APPLICATION_XML_VALUE,
-                          MediaType.TEXT_PLAIN_VALUE })
+            produces = {MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.TEXT_PLAIN_VALUE})
     //@Produces("text/plain")
     public @ResponseBody
     List<Professor> allProfessors() {
@@ -63,8 +64,8 @@ public class ProfessorController {
     }
 
     @PostMapping(value = "/new",
-                 consumes = { MediaType.APPLICATION_JSON_VALUE,
-                              MediaType.APPLICATION_XML_VALUE })
+            consumes = {MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Professor> post(@Valid @RequestBody Professor professor) {
         if (!professor.validate()) {
             return ResponseEntity.badRequest().body(professor);

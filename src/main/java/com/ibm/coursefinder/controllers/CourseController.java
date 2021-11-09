@@ -31,9 +31,18 @@ public class CourseController {
         return "courses/index";
     }
 
-    @GetMapping("/index")
-    public String index() {
-        return "index";
+    @GetMapping("/{id}")
+    public String courseById(@PathVariable Long id, Model model) {
+        try {
+            Course course = service.get(id).get();
+            Collection<Student> students = studentCourseService.getAllStudentsAssignedToCourseId(id);
+            model.addAttribute("course", course);
+            model.addAttribute("students", students);
+        } catch (Exception e) {
+            return "error";
+        }
+
+        return "courses/courseView";
     }
 
     @GetMapping("/api")
@@ -42,7 +51,7 @@ public class CourseController {
         return service.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/{id}")
     public @ResponseBody
     Course courseById(@PathVariable Long id) {
         return service.get(id).get();

@@ -3,8 +3,10 @@ package com.ibm.coursefinder.seeders;
 
 import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.entities.CourseDetails;
+import com.ibm.coursefinder.entities.StudentCourseId;
 import com.ibm.coursefinder.services.CourseService;
 import com.ibm.coursefinder.services.ProfessorService;
+import com.ibm.coursefinder.services.StudentCourseService;
 import com.ibm.coursefinder.services.StudentService;
 import com.ibm.coursefinder.userroles.Professor;
 import com.ibm.coursefinder.userroles.Student;
@@ -17,21 +19,30 @@ public class InitialSeeder {
     private CourseService courseService;
     private ProfessorService profService;
     private StudentService studentService;
+    private StudentCourseService studentCourseService;
 
-    public InitialSeeder(CourseService courseService, ProfessorService profService, StudentService studentService) {
+    public InitialSeeder(CourseService courseService, ProfessorService profService, StudentService studentService, StudentCourseService studentCourseService) {
         this.courseService = courseService;
         this.profService = profService;
         this.studentService = studentService;
+        this.studentCourseService = studentCourseService;
     }
 
     public void seed() {
         seedProfessors();
         seedCourses();
         seedStudents();
+        seedStudentCourses();
+    }
+
+    private void seedStudentCourses() {
+        var idStudent = studentService.getAll().get(0).getId();
+        var idCourse = courseService.getAll().get(0).getId();
+        studentCourseService.post(new StudentCourseId(idStudent, idCourse));
     }
 
 
-    void seedProfessors() {
+    private void seedProfessors() {
         var prof = new Professor();
         var calendar = Calendar.getInstance();
         calendar.set(1990, Calendar.AUGUST, 1);
@@ -41,7 +52,7 @@ public class InitialSeeder {
 
     }
 
-    void seedStudents() {
+    private void seedStudents() {
         var student = new Student();
         var calendar = Calendar.getInstance();
         calendar.set(2000, Calendar.OCTOBER, 31);
@@ -51,7 +62,7 @@ public class InitialSeeder {
 
     }
 
-    void seedCourses() {
+    private void seedCourses() {
         var course = new Course();
         course.setName("Matematica");
         course.setProfessor(profService.get(1L).get());
