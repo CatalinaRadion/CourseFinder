@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("students")
@@ -52,7 +51,9 @@ public class StudentController {
         if (!student.validate()) {
             return ResponseEntity.badRequest().body(student);
         }
-        return ResponseEntity.ok(service.post(student).get());
+        return service.post(student)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @GetMapping("/api")
@@ -80,26 +81,32 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public @ResponseBody
-    Student deleteStudent(@PathVariable Long id) {
-        return service.delete(id).get();
+    ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+        return service.delete(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
+
     }
 
     @PutMapping("/{id}")
     public @ResponseBody
-    Student putStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
-        return service.put(id, student).get();
+    ResponseEntity<Student> putStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
+        return service.put(id, student).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @PostMapping("/enroll")
     public @ResponseBody
-    StudentCourse enrollStudent(@RequestBody StudentCourseId id) {
-        return studentCourseService.post(id).get();
+    ResponseEntity<StudentCourse> enrollStudent(@RequestBody StudentCourseId id) {
+        return studentCourseService.post(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @DeleteMapping("/enroll")
     public @ResponseBody
-    Optional<StudentCourse> unrollStudent(@RequestBody StudentCourseId id) {
-        return studentCourseService.delete(id);
+    ResponseEntity<StudentCourse> unrollStudent(@RequestBody StudentCourseId id) {
+        return studentCourseService.delete(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
 
