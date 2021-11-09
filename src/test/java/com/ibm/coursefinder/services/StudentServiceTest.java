@@ -13,10 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,35 +43,6 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void postTest() {
-        Mockito.when(repo.save(student)).thenReturn(student);
-        assertEquals(service.post(student).get(),student);
-    }
-
-    @Test
-    public void getByIdTest() {
-        Mockito.when(repo.findById(student.getId())).thenReturn(Optional.ofNullable(student));
-        assertEquals(service.get(student.getId()).get(), student);
-    }
-
-    @Test
-    public void getAllTest() {
-        Student student2 = new Student();
-        student2.setId(2L);
-        student2.setName("Andreea");
-        student2.setDateOfBirth(new Date());
-
-        Mockito.when(repo.findAll()).thenReturn(List.of(student, student2));
-        assertEquals(service.getAll(), List.of(student, student2));
-    }
-
-    @Test
-    public void deleteTest() {
-        Mockito.when(repo.findById(student.getId())).thenReturn(Optional.ofNullable(student));
-        assertThat(service.delete(student.getId()).get()).isEqualTo(student);
-    }
-
-    @Test
     public void putTest() {
         Student replaceStudent = new Student();
         replaceStudent.setId(2L);
@@ -85,6 +54,5 @@ public class StudentServiceTest {
         student.setDateOfBirth(replaceStudent.getDateOfBirth());
         Mockito.when(repo.save(student)).thenReturn(student);
         assertEquals(service.put(student.getId(),replaceStudent).get(), student);
-
     }
 }
