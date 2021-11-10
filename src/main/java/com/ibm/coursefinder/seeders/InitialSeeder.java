@@ -36,50 +36,54 @@ public class InitialSeeder {
     }
 
     private void seedStudentCourses() {
-        var idStudent = studentService.getAll().get(0).getId();
-        var idCourse = courseService.getAll().get(0).getId();
-        studentCourseService.post(new StudentCourseId(idStudent, idCourse));
+        if (studentCourseService.getAll().size() == 0) {
+            var idStudent = studentService.getAll().get(0).getId();
+            var idCourse = courseService.getAll().get(0).getId();
+            studentCourseService.post(new StudentCourseId(idStudent, idCourse));
+        }
     }
 
 
     private void seedProfessors() {
-        var prof = new Professor();
-        var calendar = Calendar.getInstance();
-        calendar.set(1990, Calendar.AUGUST, 1);
-        prof.setDateOfBirth(calendar.getTime());
-        prof.setName("Carol");
-        prof = profService.post(prof).get();
-
+        if (profService.getAll().size() == 0) {
+            var prof = new Professor();
+            var calendar = Calendar.getInstance();
+            calendar.set(1990, Calendar.AUGUST, 1);
+            prof.setDateOfBirth(calendar.getTime());
+            prof.setName("Carol");
+            profService.post(prof);
+        }
     }
 
     private void seedStudents() {
-        var student = new Student();
-        var calendar = Calendar.getInstance();
-        calendar.set(2000, Calendar.OCTOBER, 31);
-        student.setDateOfBirth(calendar.getTime());
-        student.setName("Albert");
-        student = studentService.post(student).get();
-
+        if (studentService.getAll().size() == 0) {
+            var student = new Student();
+            var calendar = Calendar.getInstance();
+            calendar.set(2000, Calendar.OCTOBER, 31);
+            student.setDateOfBirth(calendar.getTime());
+            student.setName("Albert");
+            studentService.post(student);
+        }
     }
 
     private void seedCourses() {
-        var course = new Course();
-        course.setName("Matematica");
-        course.setProfessor(profService.get(1L).get());
-        var detail = new CourseDetails();
-        detail.setCourseDetails("Algebra 1");
-        course.setCourseDetails(detail);
-        courseService.post(course);
+        if (courseService.getAll().size() == 0) {
+            var course = new Course();
+            course.setName("Matematica");
+            course.setProfessor(profService.get(1L).get());
+            var detail = new CourseDetails();
+            detail.setCourseDetails("Algebra 1");
+            course.setCourseDetails(detail);
+            courseService.post(course);
 
-        var course2 = new Course();
-        course2.setName("Fizica");
-        course2.setProfessor(profService.get(1L).get());
-        var detail2 = new CourseDetails();
-        detail2.setCourseDetails("Mecanica cuantica");
-        course2.setCourseDetails(detail2);
-        courseService.post(course2);
+            var course2 = new Course();
+            course2.setName("Fizica");
+            course2.setProfessor(profService.get(1L).get());
+            var detail2 = new CourseDetails();
+            detail2.setCourseDetails("Mecanica cuantica");
+            course2.setCourseDetails(detail2);
+            courseService.post(course2);
 
+        }
     }
-
-
 }
