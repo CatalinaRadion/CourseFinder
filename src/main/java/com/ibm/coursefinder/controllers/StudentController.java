@@ -42,7 +42,9 @@ public class StudentController {
 
     @PostMapping("/new")
     public String post(Student student) {
-        service.post(student);
+        if (student.validate()) {
+            service.post(student);
+        }
         return "redirect:/students";
     }
 
@@ -91,6 +93,9 @@ public class StudentController {
     @PutMapping("/{id}")
     public @ResponseBody
     ResponseEntity<Student> putStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
+        if (!student.validate()) {
+            return ResponseEntity.badRequest().body(student);
+        }
         return service.put(id, student).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }

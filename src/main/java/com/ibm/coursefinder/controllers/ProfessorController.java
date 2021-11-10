@@ -36,15 +36,15 @@ public class ProfessorController {
     @PostMapping("/addCourse/{id}")
     public ResponseEntity<Course> post(@PathVariable Long id, @RequestBody Course course) {
 
+        if (!course.validate()) {
+            return ResponseEntity.badRequest().body(course);
+        }
         var professor = service.get(id).get();
         course.setProfessor(professor);
         course = courseService.post(course).get();
 
-        if (!course.validate()) {
-            return ResponseEntity.badRequest().body(course);
-        }
-
-        return ResponseEntity.ok(courseService.post(course).get());
+        return courseService.post(course).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @GetMapping(value = "/api",
@@ -59,8 +59,9 @@ public class ProfessorController {
 
     @GetMapping("/{id}")
     public @ResponseBody
-    Professor professorById(@PathVariable Long id) {
-        return service.get(id).get();
+    ResponseEntity<Professor> professorById(@PathVariable Long id) {
+        return service.get(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @PostMapping(value = "/new",
@@ -70,19 +71,25 @@ public class ProfessorController {
         if (!professor.validate()) {
             return ResponseEntity.badRequest().body(professor);
         }
-        return ResponseEntity.ok(service.post(professor).get());
+        return service.post(professor).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @PutMapping("/{id}")
     public @ResponseBody
-    Professor put(@PathVariable Long id, @RequestBody Professor professor) {
-        return service.put(id, professor).get();
+    ResponseEntity<Professor> put(@PathVariable Long id, @RequestBody Professor professor) {
+        if (!professor.validate()) {
+            return ResponseEntity.badRequest().body(professor);
+        }
+        return service.put(id, professor).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @DeleteMapping("/{id}")
     public @ResponseBody
-    Professor deleteProfessor(@PathVariable Long id) {
-        return service.delete(id).get();
+    ResponseEntity<Professor> deleteProfessor(@PathVariable Long id) {
+        return service.delete(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
 }

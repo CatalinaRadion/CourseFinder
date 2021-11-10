@@ -20,8 +20,8 @@ public class Course implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE},
-            optional = false)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE},
+            optional = false, orphanRemoval = true)
     private CourseDetails courseDetails;
 
     @ManyToOne(cascade = {CascadeType.MERGE}, optional = false)
@@ -31,7 +31,7 @@ public class Course implements Serializable {
 
     @OneToMany(mappedBy = "course")
     @JsonIgnore
-    private Set<StudentCourse> studentCourses=new HashSet<>();
+    private Set<StudentCourse> studentCourses = new HashSet<>();
 
     public Course() {
     }

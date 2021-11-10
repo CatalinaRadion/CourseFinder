@@ -19,6 +19,7 @@ public class CourseService extends RESTService<Course, Long> {
             var optionalCourse = repo.findById(id);
             optionalCourse.ifPresent(course -> {
                 course.setName(newObject.getName());
+                course.setCourseDetails(newObject.getCourseDetails());
             });
             return Optional.of(repo.save(optionalCourse.get()));
         } catch (Exception e) {

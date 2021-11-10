@@ -4,6 +4,7 @@ import com.ibm.coursefinder.entities.Course;
 import com.ibm.coursefinder.services.CourseService;
 import com.ibm.coursefinder.services.StudentCourseService;
 import com.ibm.coursefinder.userroles.Student;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,21 +53,25 @@ public class CourseController {
     }
 
     @GetMapping("/api/{id}")
-    public @ResponseBody
-    Course courseById(@PathVariable Long id) {
-        return service.get(id).get();
+    public ResponseEntity<Course> courseById(@PathVariable Long id) {
+        return service.get(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @DeleteMapping("{id}")
-    public @ResponseBody
-    Course deleteCourse(@PathVariable Long id) {
-        return service.delete(id).get();
+    public ResponseEntity<Course> deleteCourse(@PathVariable Long id) {
+        return service.delete(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @PutMapping("/{id}")
     public @ResponseBody
-    Course putCourse(@PathVariable Long id, @RequestBody Course course) {
-        return service.put(id, course).get();
+    ResponseEntity<Course> putCourse(@PathVariable Long id, @RequestBody Course course) {
+        if (!course.validate()) {
+            return ResponseEntity.badRequest().body(course);
+        }
+        return service.put(id, course).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().body(null));
     }
 
     @GetMapping("/{id}/students")
