@@ -11287,8 +11287,8 @@ textarea.form-control-lg {
   }
 }
 .features-icons {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
 }
 .features-icons .features-icons-item {
   max-width: 20rem;
@@ -11345,8 +11345,8 @@ header.masthead h1, header.masthead .h1 {
 }
 
 .testimonials {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 .testimonials .testimonial-item {
   max-width: 18rem;
